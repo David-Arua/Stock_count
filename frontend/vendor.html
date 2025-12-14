@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Marketplace | Browse Products</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="farmer.html">Farmer Portal</a></li>
+                <li><a href="vendor.html">Vendor Portal</a></li>
+                <li><a href="messages.html">Messages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>🛍️ Vendor Marketplace</h1>
+            <p>Welcome, <strong id="vendorName"></strong> | <span id="vendorLocation"></span></p>
+        </section>
+
+        <section>
+            <h2>Browse Products</h2>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search products, farmers, or locations...">
+                <button onclick="searchProducts()">Search</button>
+            </div>
+            <div id="productCatalogue" class="product-grid"></div>
+        </section>
+
+        <section>
+            <h2>My Purchase Requests</h2>
+            <table id="requestsTable">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Farmer</th>
+                        <th>Quantity</th>
+                        <th>Total (USD)</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/vendor.js"></script>
+</body>
+</html>

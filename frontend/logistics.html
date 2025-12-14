@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details | Marketplace</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="farmer.html">Farmer Portal</a></li>
+                <li><a href="vendor.html">Vendor Portal</a></li>
+                <li><a href="messages.html">Messages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="productDetail">
+            <div class="product-detail-layout">
+                <div class="product-image-section">
+                    <img id="productImage" src="" alt="Product">
+                </div>
+                <div class="product-info-section">
+                    <h1 id="productName"></h1>
+                    <p class="category" id="productCategory"></p>
+                    <p class="price" id="productPrice"></p>
+                    <p id="productQuantity"></p>
+                    <p class="location" id="productLocation"></p>
+                    <p id="productDescription"></p>
+                    
+                    <h3>👨‍🌾 Farmer Information</h3>
+                    <div class="farmer-info">
+                        <p><strong id="farmerName"></strong></p>
+                        <p id="farmerLocation"></p>
+                        <p id="farmerContact"></p>
+                    </div>
+
+                    <div id="requestForm" style="display: none;">
+                        <h3>Send Purchase Request</h3>
+                        <form id="purchaseForm">
+                            <label>Quantity Needed:</label>
+                            <input type="number" id="requestQuantity" min="1" required>
+                            <label>Additional Notes:</label>
+                            <textarea id="requestNotes" rows="3" placeholder="Optional message to farmer"></textarea>
+                            <button type="submit">Send Request</button>
+                        </form>
+                    </div>
+                    <button id="chatBtn" class="btn secondary" style="display: none;">Chat with Farmer</button>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Other Products from this Farmer</h2>
+            <div id="otherProducts" class="product-grid"></div>
+        </section>
+    </main>
+    <script src="js/api.js"></script>
+    <script src="js/logistics.js"></script>
+</body>
+</html>

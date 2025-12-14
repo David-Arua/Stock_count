@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages | Marketplace</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="farmer.html">Farmer Portal</a></li>
+        <li><a href="vendor.html">Vendor Portal</a></li>
+        <li><a href="messages.html">Messages</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>💬 Messages</h1>
+      <p>Welcome, <strong id="userName"></strong></p>
+    </section>
+
+    <section class="messaging-layout">
+      <div class="conversations-panel">
+        <h2>Conversations</h2>
+        <div id="conversationsList"></div>
+      </div>
+
+      <div class="chat-panel">
+        <div id="chatHeader" style="display: none;">
+          <h2 id="chatUserName"></h2>
+          <p id="chatUserInfo"></p>
+        </div>
+        <div id="chatMessages"></div>
+        <form id="chatForm" style="display: none;">
+          <input type="text" id="messageInput" placeholder="Type your message..." required>
+          <button type="submit">Send</button>
+        </form>
+        <div id="chatPlaceholder">
+          <p>Select a conversation to start chatting</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="js/api.js"></script>
+  <script src="js/messages.js"></script>
+</body>
+</html>

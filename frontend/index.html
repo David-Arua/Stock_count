@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer-Vendor Marketplace</title>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="farmer.html">Farmer Portal</a></li>
+                <li><a href="vendor.html">Vendor Portal</a></li>
+                <li><a href="messages.html">Messages</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>🌾 Connect Farmers with Vendors</h1>
+            <p>Trade directly. No middlemen. Fair prices for everyone.</p>
+            
+            <div class="auth-section" id="authSection">
+                <div class="auth-toggle">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <form id="loginForm" class="auth-form active">
+                    <h2>Login</h2>
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+
+                <form id="registerForm" class="auth-form">
+                    <h2>Register</h2>
+                    <select id="regType" required>
+                        <option value="">Select Type</option>
+                        <option value="farmer">I'm a Farmer</option>
+                        <option value="vendor">I'm a Vendor</option>
+                    </select>
+                    <input type="text" id="regName" placeholder="Full Name" required>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <input type="tel" id="regPhone" placeholder="Phone Number" required>
+                    <input type="text" id="regLocation" placeholder="Location" required>
+                    <input type="text" id="regBusiness" placeholder="Farm/Business Name" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+
+            <div class="user-welcome" id="userWelcome" style="display: none;">
+                <h2>Welcome, <span id="userName"></span>!</h2>
+                <p>Account Type: <strong id="userType"></strong></p>
+                <div class="action-buttons">
+                    <a href="farmer.html" class="btn" id="farmerLink" style="display: none;">Go to Farmer Dashboard</a>
+                    <a href="vendor.html" class="btn" id="vendorLink" style="display: none;">Go to Vendor Marketplace</a>
+                    <a href="messages.html" class="btn">View Messages</a>
+                    <button class="btn secondary" id="logoutBtn">Logout</button>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>How It Works</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>👨‍🌾 For Farmers</h3>
+                    <p>Post your products, manage listings, receive purchase requests, and chat with vendors directly.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🛒 For Vendors</h3>
+                    <p>Browse fresh produce, search by product or location, send requests, and negotiate with farmers.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💬 Real-Time Chat</h3>
+                    <p>Communicate instantly with buyers/sellers inside the platform. No need for phone calls.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🚚 Order Tracking</h3>
+                    <p>Track every request from pending to completed. Full transparency on status updates.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/api.js"></script>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const authSection = document.getElementById('authSection');
+        const userWelcome = document.getElementById('userWelcome');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+
+        function checkAuth() {
+            const user = window.AppAPI.getCurrentUser();
+            if (user) {
+                authSection.style.display = 'none';
+                userWelcome.style.display = 'block';
+                document.getElementById('userName').textContent = user.name;
+                document.getElementById('userType').textContent = user.type.charAt(0).toUpperCase() + user.type.slice(1);
+                
+                if (user.type === 'farmer') {
+                    document.getElementById('farmerLink').style.display = 'inline-block';
+                } else {
+                    document.getElementById('vendorLink').style.display = 'inline-block';
+                }
+            }
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                document.getElementById(tab + 'Form').classList.add('active');
+            });
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            try {
+                await window.AppAPI.login(email, password);
+                checkAuth();
+            } catch (err) {
+                alert(err.message || 'Invalid credentials');
+            }
+        });
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                type: document.getElementById('regType').value,
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPassword').value,
+                phone: document.getElementById('regPhone').value,
+                location: document.getElementById('regLocation').value
+            };
+            
+            if (data.type === 'farmer') {
+                data.farmName = document.getElementById('regBusiness').value;
+            } else {
+                data.businessName = document.getElementById('regBusiness').value;
+            }
+
+            try {
+                await window.AppAPI.register(data);
+                checkAuth();
+            } catch (err) {
+                alert(err.message || 'Registration failed');
+            }
+        });
+
+        document.getElementById('logoutBtn')?.addEventListener('click', () => {
+            window.AppAPI.logout();
+            location.reload();
+        });
+
+        checkAuth();
+    </script>
+</body>
+</html>
