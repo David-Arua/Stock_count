@@ -50,6 +50,9 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve frontend static files (for production deployment)
+app.use(express.static(path.join(__dirname, '../frontend')));
+
 // Initialize database
 const db = require('./models/database');
 
